@@ -1,4 +1,4 @@
-import {TextInput,KeyboardAvoidingView,View,Text,StyleSheet,Platform} from 'react-native';
+import {TextInput,KeyboardAvoidingView,View,Text,StyleSheet,Platform,Button} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import React ,{ useState } from 'react';
 
@@ -16,15 +16,34 @@ const departaments={
 export default function Index(){
 const [sector,setSector] = useState('');
 const [sala,setSala] = useState('');
+const [solicitante,setSolicitante] = useState('');
+const [description,setDescription] = useState('');
+const [dateStart,setDateStart] = useState('');
+const [dateFinal,setDateFinal] = useState('');
 
+const call = {
+	title:'',
+	caller:solicitante,
+	descricao:description,
+	setor:sector,
+	sala:sala,
+	dateStart:dateStart,
+	datafinal:dateFinal
+
+
+}
 
 	return(	
        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{flex:1}}>
-       <View style={styles.ContainerMain}>
+       
+
+       <View style={styles.ContainerOptions}>
+       
+
        <View >
-       <Text>{`${sector} ${sala}`}</Text>
-       <TextInput style={styles.Texto} placeholder="solicitante" value={()=>{}}></TextInput>
-       <TextInput style={[styles.Texto,{height:100}]} textAlignVertical="top" placeholder="descrição" multiline={true}/>
+       <Text>{`${call.setor} ${call.sala} ${solicitante}`}</Text>
+       <TextInput style={styles.Texto} placeholder="solicitante" onChangeText={setSolicitante} value={solicitante}></TextInput>
+       <TextInput onChangeText={setDescription} value={description} style={[styles.Texto,{height:100}]} textAlignVertical="top" placeholder="descrição" multiline={true}/>
        </View>
 
 
@@ -43,20 +62,29 @@ const [sala,setSala] = useState('');
        )}
        </View>
        </View>
+       <View style={styles.containerButtons}>
+       <Button title={"iniciar"} onPress={()=>{
+       }}></Button>
+
+       <Button title={"concluir"} onPress={()=>{}}></Button>
+       </View>
        </View>
        </KeyboardAvoidingView>
       );}
 
 const styles = StyleSheet.create({
-	ContainerMain:{
+	containerMain:{
+		flex:1,
+	},
+	ContainerOptions:{
 		flex:1,
 		width:"100%",
 		alignItems:'center',
 		justifyContent:'center',
-		flexDirection:'row'
+		flexDirection:'center'
 	},
 	Texto:{ 
-		margin:5,
+		margin:2,
 		borderWidth:1,
 		borderRadius:15,
 		width:200
@@ -65,5 +93,11 @@ const styles = StyleSheet.create({
 		margin:0,
 		borderWidth:1,
 		width:180
+	},
+	containerButtons:{
+		margin:5,
+		justifyContent:'center',
+		alignItems:'flex-start',
+		flexDirection:'row',
 	}
 });
