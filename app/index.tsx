@@ -1,7 +1,7 @@
 import {TextInput,KeyboardAvoidingView,View,Text,StyleSheet,Platform,Button} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import React ,{ useState } from 'react';
-
+import uuid from 'react-native-uuid';
 
 
 
@@ -14,6 +14,7 @@ const departaments={
 
 
 export default function Index(){
+const [title,setTitle] = useState('')
 const [sector,setSector] = useState('');
 const [sala,setSala] = useState('');
 const [solicitante,setSolicitante] = useState('');
@@ -22,16 +23,22 @@ const [dateStart,setDateStart] = useState('');
 const [dateFinal,setDateFinal] = useState('');
 
 const call = {
-	title:'',
+	title:title,
 	caller:solicitante,
 	descricao:description,
 	setor:sector,
 	sala:sala,
 	dateStart:dateStart,
 	datafinal:dateFinal
+}
 
+const startCall = () => {
+	 setTitle(()=>{return uuid.v4()});
+	 setDateStart(`${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
 
 }
+
+
 
 	return(	
        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{flex:1}}>
@@ -41,7 +48,7 @@ const call = {
        
 
        <View >
-       <Text>{`${call.setor} ${call.sala} ${solicitante}`}</Text>
+       <Text>{`${call.title} ${call.setor} ${call.sala} ${call.dateStart}`}</Text>
        <TextInput style={styles.Texto} placeholder="solicitante" onChangeText={setSolicitante} value={solicitante}></TextInput>
        <TextInput onChangeText={setDescription} value={description} style={[styles.Texto,{height:100}]} textAlignVertical="top" placeholder="descrição" multiline={true}/>
        </View>
@@ -64,6 +71,9 @@ const call = {
        </View>
        <View style={styles.containerButtons}>
        <Button title={"iniciar"} onPress={()=>{
+	       if(call.title === ''){
+	       startCall()
+	       }
        }}></Button>
 
        <Button title={"concluir"} onPress={()=>{}}></Button>
