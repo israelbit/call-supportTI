@@ -1,14 +1,15 @@
-import {TextInput,KeyboardAvoidingView,View,Text,StyleSheet,Platform,Button} from 'react-native';
+import {TextInput,KeyboardAvoidingView,View,Text,StyleSheet,Platform,Button,Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import React ,{ useState,useEffect } from 'react';
 import uuid from 'react-native-uuid';
-import credentials from './credential.json'
+
 
 
 const departaments={
-	Medio: ["Sala 25","Sala 22", "Sala 25"],
-	Fund1:["Sala 1","Sala 2","Sala 3"],
-	Fund2:["Sala 10","Sala 11","Sala 12"],
+	infantil:["Sala 22","Sala 23" ,"Sala 24","Sala 25","Sala 26","Sala 27","Sala 28","Sala 30","Sala 31","Sala 32","Sala 33"]
+	Medio: ["Sala 18","Sala 19", "Sala 20","Sala 21"]
+	Fund1:["Sala 1","Sala 2","Sala 3","Sala 4","Sala 5","Sala 6"],
+	Fund2:["Sala 7","Sala 8","Sala 9","Sala 10","Sala 11","Sala 12","Sala 13","Sala 14","Sala 15","Sala 16","Sala 17"],
 	Adm:["RH","Financeiro","Secretaria","Grafica"]
 }
 const communication = ["Chat","Pessoalmente","Radio"]
@@ -35,7 +36,7 @@ const call = {
 
 const send = async () => {
 	try{
-	 const response = await fetch(credentials.ENDPOINT,{
+	 const response = await fetch(,{
 				headers:{
 					"Content-Type":"application/json"
 					},
@@ -70,10 +71,6 @@ const startCall = () => {
 	 setDateStart(`${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
 
 }
-const endCall =() =>{
-	setDateFinal(`${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`)
-}
-
 	return(	
        <KeyboardAvoidingView style={{flex:1}}>
 
@@ -115,7 +112,17 @@ const endCall =() =>{
        </View>
        <View style={{margin:2}}>
        <Button title={"concluir"} onPress={()=>{
-	       endCall();
+	       Alert.alert("Finalizar chamado","Você deseja finalizar chamdo agora",
+		       [
+			       {
+				       text:"cancelar",
+				       style:"cancel",
+			       },{
+				       text:"Confirmar",
+				       onPress:()=> setDateFinal(`${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`),
+			       }
+		       ]
+			  ); 
        }}></Button>
        </View>
        </View>
